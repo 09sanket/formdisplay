@@ -20,15 +20,30 @@ userForm.addEventListener('submit', function(e) {
   localStorage.setItem('userDetails', JSON.stringify(user));
 
   // Display user details on the screen
-  userDetailsDiv.innerHTML = `
-    <h2>User Details:</h2>
-    <p>Name: ${user.name}</p>
-    <p>Email: ${user.email}</p>
-    <p>Phone: ${user.phone}</p>
+  userDetailsDiv.innerHTML += `
+    <div class="user">
+      <h2>User Details:</h2>
+      <p>Name: <span>${user.name}</span> <button class="delete" data-field="name">Delete</button></p>
+      <p>Email: <span>${user.email}</span> <button class="delete" data-field="email">Delete</button></p>
+      <p>Phone: <span>${user.phone}</span> <button class="delete" data-field="phone">Delete</button></p>
+    </div>
   `;
 
   // Reset the form
   userForm.reset();
 });
 
+// Handle delete button click
+userDetailsDiv.addEventListener('click', function(e) {
+  if (e.target.classList.contains('delete')) {
+    var field = e.target.getAttribute('data-field'); // Get the data-field attribute value
+    var content = e.target.previousElementSibling; // Get the corresponding content element
 
+    // Remove the content associated with the field
+    content.textContent = '';
+
+    // Optionally, you can also remove the entire user div if desired
+    // var userDiv = e.target.parentNode.parentNode;
+    // userDiv.remove();
+  }
+});
